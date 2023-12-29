@@ -12,17 +12,13 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('money_transactions', function (Blueprint $table) {
+        Schema::create('product_reviews', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('transaction_type')->comment('in, out');
-            $table->bigInteger('purchase_id')->nullable();
-            $table->bigInteger('sell_id')->nullable();
-            $table->bigInteger('expense_id')->nullable();
-            $table->decimal('total_amount')->default(0);
-            $table->bigInteger('bank_id')->nullable();
-            $table->text('description')->nullable();
-            $table->tinyInteger('is_invest')->default(0)->comment('1=yes,0=no');
-            $table->date('date');
+            $table->unsignedBigInteger('customer_id');
+            $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->text('product_review_details');
             $table->tinyInteger('status')->comment('0=inactive,1=active')->default(1);
             $table->timestamp('created_at')->nullable()->default(null);
             $table->unsignedInteger('created_by')->nullable()->default(null);
@@ -41,6 +37,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('money_transactions');
+        Schema::dropIfExists('product_reviews');
     }
 };

@@ -15,14 +15,20 @@ return new class extends Migration {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->bigInteger('category_id');
-            $table->bigInteger('subcategory_id')->nullable();
+            $table->bigInteger('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('product_categories')->onDelete('cascade');
+            $table->bigInteger('subcategory_id')->unsigned()->nullable()->default(null);
+            $table->foreign('subcategory_id')->references('id')->on('product_sub_categories')->onDelete('set null');
             $table->string('image_path')->nullable();
             $table->string('code')->nullable();
-            $table->string('color')->nullable();
-            $table->string('size')->nullable();
-            $table->bigInteger('brand_id')->nullable()->default(0);
-            $table->bigInteger('supplier_id')->nullable();
+            $table->unsignedBigInteger('color')->nullable()->default(null);
+            $table->foreign('color')->references('id')->on('product_colors')->onDelete('cascade');
+            $table->unsignedBigInteger('size')->nullable()->default(null);
+            $table->foreign('size')->references('id')->on('product_sizes')->onDelete('cascade');
+            $table->unsignedBigInteger('brand_id')->nullable()->default(null);
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
+            $table->unsignedBigInteger('supplier_id')->nullable()->default(null);
+            $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
             $table->decimal('current_purchase_cost', 11, 3);
             $table->decimal('current_sale_price', 11, 3)->nullable();
             $table->decimal('previous_purchase_cost', 11, 3)->nullable();

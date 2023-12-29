@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('online_payment_details', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('sell_id');
+            $table->unsignedBigInteger('sell_id');
+            $table->foreign('sell_id')->references('id')->on('sells')->onDelete('cascade');
             $table->decimal('total_amount',11,3);
             $table->string('pay_with')->nullable();
-            $table->string('transaction_id')->nullable();
+            $table->unsignedBigInteger('transaction_id')->nullable();
+            $table->foreign('transaction_id')->references('id')->on('money_transactions')->onDelete('cascade');
             $table->timestamps();
         });
     }

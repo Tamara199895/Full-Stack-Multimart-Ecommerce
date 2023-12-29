@@ -1,0 +1,15 @@
+{
+    "name": "user/full-stack-multimart-ecommerce-main",
+    "autoload": {
+        "psr-4": {
+            "User\\FullStackMultimartEcommerceMain\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tamara199895",
+            "email": "tbabayan35@gmail.com"
+        }
+    ],
+    "require": {}
+}

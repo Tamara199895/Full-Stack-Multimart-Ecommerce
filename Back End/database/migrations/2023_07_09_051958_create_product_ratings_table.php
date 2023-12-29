@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('language_settings', function (Blueprint $table) {
+        Schema::create('product_ratings', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
-            $table->string('default_language')->comment('en,bn');
+            $table->unsignedBigInteger('customer_id');
+            $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade');
+            $table->bigInteger('rating_amount');
             $table->tinyInteger('status')->comment('0=inactive,1=active')->default(1);
             $table->timestamp('created_at')->nullable()->default(null);
             $table->unsignedInteger('created_by')->nullable()->default(null);
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('language_settings');
+        Schema::dropIfExists('product_ratings');
     }
 };

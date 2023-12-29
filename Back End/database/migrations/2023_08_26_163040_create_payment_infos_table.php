@@ -16,9 +16,11 @@ return new class extends Migration
         Schema::create('payment_infos', function (Blueprint $table) {
             $table->id();
             $table->string('payment_type');
-            $table->string('sell_id');
+            $table->unsignedBigInteger('sell_id');
+            $table->foreign('sell_id')->references('id')->on('sells');
             $table->string('total_paid');
-            $table->string('tnx_id');
+            $table->unsignedBigInteger('tnx_id');
+            $table->foreign('tnx_id')->references('id')->on('money_transactions');
             $table->string('card_brand')->nullable();
             $table->string('card_last_digit');
             $table->string('payment_inv_link')->nullable();

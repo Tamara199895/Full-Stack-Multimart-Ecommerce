@@ -189,7 +189,7 @@ const AllProductList = () => {
                                                     <h4 className='sideitemtxt'>Category  <span onClick={reset} className='reseticon'><BiReset/></span></h4>
                                                 </div>
                                                 <ul>
-                                                    {                                                   
+                                                    {/* {                                                   
                                                         subcategorylist.isSuccess&&subcategorylist.data.map(cate => {
                                                             return <>
                                                                 <li>
@@ -204,7 +204,7 @@ const AllProductList = () => {
                                                                 </UncontrolledCollapse>
                                                             </>
                                                         })
-                                                    }
+                                                    } */}
                                                 </ul>
                                             </Col>
                                             <Col lg='12' className='srcdiv'>

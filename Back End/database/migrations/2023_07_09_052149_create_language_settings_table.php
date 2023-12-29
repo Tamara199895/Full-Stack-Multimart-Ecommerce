@@ -13,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sell_details', function (Blueprint $table) {
+        Schema::create('language_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('product_id');
-            $table->string('sell_id');
-            $table->decimal('unit_product_cost')->nullable();
-            $table->decimal('unit_sell_price');
-            $table->decimal('unit_vat')->default(0)->nullable();
-            $table->decimal('sale_quantity',11,2);
-            $table->decimal('total_discount',11,2)->default(0);
-            $table->decimal('total_payable_amount',11,2);
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('default_language')->comment('en,bn');
             $table->tinyInteger('status')->comment('0=inactive,1=active')->default(1);
             $table->timestamp('created_at')->nullable()->default(null);
             $table->unsignedInteger('created_by')->nullable()->default(null);
@@ -31,6 +26,7 @@ return new class extends Migration
             $table->tinyInteger('deleted')->default(0)->comment('0=active,1=deleted');
             $table->timestamp('deleted_at')->nullable()->default(null);
             $table->unsignedInteger('deleted_by')->nullable()->default(null);
+
         });
     }
 
@@ -41,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sell_details');
+        Schema::dropIfExists('language_settings');
     }
 };

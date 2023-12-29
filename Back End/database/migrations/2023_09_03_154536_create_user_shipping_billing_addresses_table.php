@@ -13,24 +13,27 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sell_order_addresses', function (Blueprint $table) {
+        Schema::create('user_shipping_billing_addresses', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
-            $table->bigInteger('sell_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('email')->nullable();
-            $table->string('name')->nullable();
-            $table->string('shipping_phone');
-            $table->string('shipping_address');
-            $table->bigInteger('shipping_division');
-            $table->bigInteger('shipping_district');
-            $table->string('shipping_city')->nullable();
-            $table->string('shipping_country');
-            $table->string('shipping_zip');
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('shipping_phone')->nullable();
+            $table->string('shipping_address')->nullable();
+            $table->string('shipping_country')->nullable();
+            $table->string('shipping_zip')->nullable();
             $table->string('shipping_state')->nullable();
+            $table->string('shipping_city')->nullable();
 
-            $table->string('billing_first_name')->nullable();
+            $table->bigInteger('shipping_division')->nullable();
+            $table->bigInteger('shipping_district')->nullable();
+
             $table->bigInteger('billing_division')->nullable();
             $table->bigInteger('billing_district')->nullable();
+
+            $table->string('billing_first_name')->nullable();
             $table->string('billing_last_name')->nullable();
             $table->string('billing_email')->nullable();
             $table->string('billing_phone')->nullable();
@@ -51,6 +54,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sell_order_addresses');
+        Schema::dropIfExists('user_shipping_billing_addresses');
     }
 };

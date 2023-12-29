@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('product_sub_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->bigInteger('category_id');
+            $table->bigInteger('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('product_categories')->onDelete('cascade');
             $table->string('image')->nullable();
             $table->string('note')->nullable();
             $table->tinyInteger('status')->default(1)->comment('0=inactive,1=active');

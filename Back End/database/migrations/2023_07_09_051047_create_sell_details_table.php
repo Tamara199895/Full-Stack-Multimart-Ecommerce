@@ -13,15 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('offer_product_lists', function (Blueprint $table) {
+        Schema::create('sell_details', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('product_id');
-            $table->bigInteger('offer_id');
-            $table->decimal('max_quantity',11,2)->default(0);
-            $table->decimal('total_sell_quantity',11,2)->nullable();
-            $table->tinyInteger('offer_type')->comment('0=fixed,1=percentage');
-            $table->decimal('offer_amount',11,2);
-            $table->tinyInteger('status')->default(1)->comment('0=inactive,1=active');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->unsignedBigInteger('sell_id');
+            $table->foreign('sell_id')->references('id')->on('sells')->onDelete('cascade');
+            $table->decimal('unit_product_cost')->nullable();
+            $table->decimal('unit_sell_price');
+            $table->decimal('unit_vat')->default(0)->nullable();
+            $table->decimal('sale_quantity',11,2);
+            $table->decimal('total_discount',11,2)->default(0);
+            $table->decimal('total_payable_amount',11,2);
+            $table->tinyInteger('status')->comment('0=inactive,1=active')->default(1);
             $table->timestamp('created_at')->nullable()->default(null);
             $table->unsignedInteger('created_by')->nullable()->default(null);
             $table->timestamp('updated_at')->nullable()->default(null);
@@ -39,6 +43,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('offer_product_lists');
+        Schema::dropIfExists('sell_details');
     }
 };

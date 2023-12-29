@@ -18,20 +18,20 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
-    }
+    } 
 
     /**
      * Bootstrap any application services.
      *
      * @return void
      */
-    public function boot()
-    {
-        Schema::defaultStringLength(191);
+    // public function boot()
+    // {
+    //     Schema::defaultStringLength(191);
 
-       $companydata= CompanyInfo::first();
+    //    $companydata= CompanyInfo::first();
 
-        View::share('company_info_share',$companydata);
+    //     View::share('company_info_share',$companydata);
 
-    }
+    // }
 }

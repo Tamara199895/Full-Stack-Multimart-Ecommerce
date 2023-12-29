@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('bn_name');
-            $table->bigInteger('division_id');
+            $table->unsignedBigInteger('division_id');
+            $table->foreign('division_id')->references('id')->on('divisions')->onDelete('cascade');
             $table->timestamps();
         });
     }

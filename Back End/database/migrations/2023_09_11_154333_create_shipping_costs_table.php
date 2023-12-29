@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('shipping_costs', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('division_id');
-            $table->bigInteger('district_id');
+            $table->unsignedBigInteger('division_id');
+            $table->foreign('division_id')->references('id')->on('divisions');
+            $table->unsignedBigInteger('district_id');
+            $table->foreign('district_id')->references('id')->on('districts');
             $table->decimal('inside_price')->nullable()->default(0);
             $table->decimal('outside_price')->nullable()->default(0);
             $table->timestamps();

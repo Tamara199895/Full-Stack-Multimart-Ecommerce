@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('product_images', function (Blueprint $table) {
             $table->id();
-            $table->string('product_id');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->string('image');
             $table->tinyInteger('status')->default(1)->comment("active=1,inactive=0");
             $table->timestamp('created_at')->nullable();
@@ -27,7 +28,6 @@ return new class extends Migration
             $table->bigInteger('deleted_by')->nullable();
         });
     }
-
     /**
      * Reverse the migrations.
      *

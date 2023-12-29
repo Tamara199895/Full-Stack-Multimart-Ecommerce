@@ -13,17 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_details', function (Blueprint $table) {
+        Schema::create('add_to_cart_lists', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('purchase_id');
-            $table->bigInteger('product_id');
-            $table->bigInteger('unit_cost');
-            $table->decimal('total_qty',11,3);
-            $table->decimal('total_cost',11,3);
-            $table->decimal('total_vat',11,2)->default(0)->nullable();
-            $table->decimal('total_discount')->default(0)->nullable();
-            $table->decimal('purchase_payable_amount',11,2)->default(0);
-            $table->date('date');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->string('quantity');
+            $table->unsignedBigInteger('customer_id');
+            $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('offer_id')->nullable();
+            $table->foreign('offer_id')->references('id')->on('offers');
+            $table->decimal('offer_discount',11,2)->nullable();
+            $table->string('offer_exp_date')->nullable();
+            $table->string('date');
             $table->tinyInteger('status')->default(1)->comment('0=inactive,1=active');
             $table->timestamp('created_at')->nullable()->default(null);
             $table->unsignedInteger('created_by')->nullable()->default(null);
@@ -42,6 +43,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchase_details');
+        Schema::dropIfExists('add_to_cart_lists');
     }
 };
